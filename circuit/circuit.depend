@@ -1,0 +1,79 @@
+# depslib dependency file v1.0
+1431308154 source:c:\c_cpp\vclass\projects\circuit\main.cpp
+	<iostream>
+	"Circuit.h"
+	"Lamp.h"
+	"Fan.h"
+	"Electric.h"
+
+1431310344 c:\c_cpp\vclass\projects\circuit\include\circuit.h
+	"Electric.h"
+	"Button.h"
+
+1431310388 c:\c_cpp\vclass\projects\circuit\include\electric.h
+
+1431309855 c:\c_cpp\vclass\projects\circuit\include\button.h
+	"Circuit.h"
+
+1431310404 c:\c_cpp\vclass\projects\circuit\include\lamp.h
+	"Electric.h"
+	<iostream>
+
+1431310344 c:\c_cpp\vclass\projects\circuit\include\fan.h
+	"Electric.h"
+	<iostream>
+
+1431310344 source:c:\c_cpp\vclass\projects\circuit\src\button.cpp
+	"Button.h"
+
+1431310344 source:c:\c_cpp\vclass\projects\circuit\src\circuit.cpp
+	"Circuit.h"
+
+1431308102 source:c:\c_cpp\vclass\projects\circuit\src\electric.cpp
+	"Electric.h"
+
+1431307939 source:c:\c_cpp\vclass\projects\circuit\src\fan.cpp
+	"Fan.h"
+
+1431307931 source:c:\c_cpp\vclass\projects\circuit\src\lamp.cpp
+	"Lamp.h"
+
+1431308156 source:c:\documents and settings\administrator\桌面\circuit\main.cpp
+	<iostream>
+	"Circuit.h"
+	"Lamp.h"
+	"Fan.h"
+	"Electric.h"
+
+1431310346 c:\documents and settings\administrator\桌面\circuit\include\circuit.h
+	"Electric.h"
+	"Button.h"
+
+1431585647 c:\documents and settings\administrator\桌面\circuit\include\electric.h
+
+1431309856 c:\documents and settings\administrator\桌面\circuit\include\button.h
+	"Circuit.h"
+
+1431586027 c:\documents and settings\administrator\桌面\circuit\include\lamp.h
+	"Electric.h"
+	<iostream>
+
+1431586027 c:\documents and settings\administrator\桌面\circuit\include\fan.h
+	"Electric.h"
+	<iostream>
+
+1431310346 source:c:\documents and settings\administrator\桌面\circuit\src\button.cpp
+	"Button.h"
+
+1431585886 source:c:\documents and settings\administrator\桌面\circuit\src\circuit.cpp
+	"Circuit.h"
+
+1431308104 source:c:\documents and settings\administrator\桌面\circuit\src\electric.cpp
+	"Electric.h"
+
+1431307940 source:c:\documents and settings\administrator\桌面\circuit\src\fan.cpp
+	"Fan.h"
+
+1431307932 source:c:\documents and settings\administrator\桌面\circuit\src\lamp.cpp
+	"Lamp.h"
+

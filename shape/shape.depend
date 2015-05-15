@@ -1,0 +1,70 @@
+# depslib dependency file v1.0
+1430985305 source:c:\c_cpp\vclass\projects\shape\main.cpp
+	<iostream>
+	"CCircle.h"
+	"CRectangle.h"
+	"CShape.h"
+	"CCanvas.h"
+	<assert.h>
+
+1430985722 c:\c_cpp\vclass\projects\shape\include\ccircle.h
+	"CShape.h"
+
+1430985696 c:\c_cpp\vclass\projects\shape\include\crectangle.h
+	"CShape.h"
+	<iostream>
+
+1430985754 c:\c_cpp\vclass\projects\shape\include\cshape.h
+	<iostream>
+
+1430984333 source:c:\c_cpp\vclass\projects\shape\src\ccircle.cpp
+	"CCircle.h"
+
+1430984333 source:c:\c_cpp\vclass\projects\shape\src\crectangle.cpp
+	"CRectangle.h"
+
+1430983398 source:c:\c_cpp\vclass\projects\shape\src\cshape.cpp
+	"CShape.h"
+
+1430984534 c:\c_cpp\vclass\projects\shape\include\ccanvas.h
+	"CShape.h"
+
+1430985696 source:c:\c_cpp\vclass\projects\shape\src\ccanvas.cpp
+	"CCanvas.h"
+	<assert.h>
+
+1431307067 source:c:\documents and settings\administrator\桌面\shape\main.cpp
+	<iostream>
+	".\include\CCircle.h"
+	".\include\CRectangle.h"
+	".\include\CShape.h"
+	".\include\CCanvas.h"
+	<assert.h>
+
+1431307646 source:c:\documents and settings\administrator\桌面\shape\src\ccanvas.cpp
+	"../include/CCanvas.h"
+	<assert.h>
+
+1431307670 source:c:\documents and settings\administrator\桌面\shape\src\ccircle.cpp
+	"../include/CCircle.h"
+
+1431307680 source:c:\documents and settings\administrator\桌面\shape\src\crectangle.cpp
+	"../include/CRectangle.h"
+
+1431307688 source:c:\documents and settings\administrator\桌面\shape\src\cshape.cpp
+	"../include/CShape.h"
+
+1431307521 c:\documents and settings\administrator\桌面\shape\include\ccircle.h
+	"CShape.h"
+
+1431307489 c:\documents and settings\administrator\桌面\shape\include\cshape.h
+	<iostream>
+
+1431307600 c:\documents and settings\administrator\桌面\shape\include\crectangle.h
+	"CShape.h"
+	<iostream>
+
+1431307717 c:\documents and settings\administrator\桌面\shape\include\ccanvas.h
+	"CShape.h"
+	<iostream>
+
