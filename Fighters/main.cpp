@@ -6,36 +6,25 @@
 #include"Fighter.h"
 #include"FlyingObject.h"
 #include"CTexture.h"
+#include"Game.h"
+#include<assert.h>
 
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Fighter!");
+    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Fighter!",sf::Style::Close);
+    window.setFramerateLimit(60);
     mciSendString("open .\\music\\ring.wav alias ring", NULL, 0, NULL);
+    mciSendString("open .\\music\\bomb!.mp3 alias bomb", NULL, 0, NULL);
     mciSendString("play ring", NULL, 0, NULL);
-    while (window.isOpen())
-    {
-       sf::Event event;
-       CTexture pictures;
-       pictures.load();
-       //≥ı ºªØ!
-       Fighter a(360,500,0,0,pictures);
-
-       a.setTexture(pictures.pFighter,true);
-       a.setTextureRect(sf::IntRect(29,27,60,66));
-       a.setPosition(360,500);
-      /////
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-
-        }
-
-        window.clear();
-        window.draw(a);
-        window.display();
-    }
+    CTexture pictures;
+    pictures.load();
+    Fighter a(360,500,60,66,0,&pictures);
+    Game mainGame(&window,&pictures);
+    mainGame.SetFighter(&a);
+    //Preparations.
+    /////Entrance of event loop
+    mainGame.Entrance();
 
     return 0;
 }

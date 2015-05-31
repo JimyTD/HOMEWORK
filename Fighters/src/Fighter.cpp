@@ -1,11 +1,13 @@
 #include "Fighter.h"
 
-Fighter::Fighter(int nLeft,int nTop,int nWidth,int nHeight,CTexture &ct):FlyingObject(nLeft,nTop,nWidth,nHeight)
+Fighter::Fighter(int nLeft,int nTop,int nWidth,int nHeight,int nSpeed,CTexture *ct):FlyingObject(nLeft,nTop,nWidth,nHeight,nSpeed)
 {
-    switch(type)
+   setTexture(ct->pFighter);
+
+   /*   switch(type)
    {
    case 1:
-      setTexture(ct.pFighter,true);
+      setTexture(ct->pFighter,true);
       break;
    case 2:
     break;
@@ -13,8 +15,9 @@ Fighter::Fighter(int nLeft,int nTop,int nWidth,int nHeight,CTexture &ct):FlyingO
     break;
    default:
     break;
-    }//////
+    }//////*/
     setPosition(nLeft,nTop);
+    addSpeed=2;
 }
 
 Fighter::~Fighter()

@@ -10,8 +10,9 @@ class CTexture
         static sf::Texture pFighter;
         static sf::Texture pEnemy1;
         static sf::Texture pEnemy2;
-        static sf::Texture pEnemy3;
+        static sf::Texture pBullet;
         static sf::Texture pBackground;
+        static sf::Texture pBomb;
         void load();
 
 

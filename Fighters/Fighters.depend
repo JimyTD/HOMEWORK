@@ -1,11 +1,13 @@
 # depslib dependency file v1.0
-1432281765 source:d:\programsoftd\c cpp hmwk\fighters\main.cpp
+1432987655 source:d:\programsoftd\c cpp hmwk\fighters\main.cpp
 	<windows.h>
 	<SFML/Graphics.hpp>
 	"Enemy.h"
 	"Fighter.h"
 	"FlyingObject.h"
 	"CTexture.h"
+	"Game.h"
+	<assert.h>
 
 1429780453 d:\programsoftd\c++ windows\sfml-2.3-windows-gcc-4.7.1-tdm-32-bit\sfml-2.3\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
@@ -385,43 +387,68 @@
 	<string>
 	<vector>
 
-1432281884 source:d:\programsoftd\c cpp hmwk\fighters\src\fighter.cpp
+1432987426 source:d:\programsoftd\c cpp hmwk\fighters\src\fighter.cpp
 	"Fighter.h"
 
-1432281627 d:\programsoftd\c cpp hmwk\fighters\include\fighter.h
+1432881539 d:\programsoftd\c cpp hmwk\fighters\include\fighter.h
 	<SFML/Graphics.hpp>
 	"FlyingObject.h"
 	"CTexture.h"
 
-1432282018 d:\programsoftd\c cpp hmwk\fighters\include\flyingobject.h
+1432463955 d:\programsoftd\c cpp hmwk\fighters\include\flyingobject.h
 	<SFML/Graphics.hpp>
 
-1432282018 source:d:\programsoftd\c cpp hmwk\fighters\src\flyingobject.cpp
+1432463955 source:d:\programsoftd\c cpp hmwk\fighters\src\flyingobject.cpp
 	"FlyingObject.h"
 
-1431997385 d:\programsoftd\c cpp hmwk\fighters\include\enemy.h
+1432819918 d:\programsoftd\c cpp hmwk\fighters\include\enemy.h
 	<SFML/Graphics.hpp>
 	"FlyingObject.h"
+	"CTexture.h"
 
-1432283282 source:d:\programsoftd\c cpp hmwk\fighters\src\enemy.cpp
+1432827490 source:d:\programsoftd\c cpp hmwk\fighters\src\enemy.cpp
 	"Enemy.h"
 
-1431995712 source:d:\programsoftd\c cpp hmwk\fighters\src\bullet.cpp
+1432817270 source:d:\programsoftd\c cpp hmwk\fighters\src\bullet.cpp
 	"Bullet.h"
+	"CTexture.h"
 
-1432279323 d:\programsoftd\c cpp hmwk\fighters\include\bullet.h
+1432604915 d:\programsoftd\c cpp hmwk\fighters\include\bullet.h
 	<SFML/Graphics.hpp>
 	"FlyingObject.h"
+	"CTexture.h"
 
-1431999864 source:d:\programsoftd\c cpp hmwk\fighters\src\ctexture.cpp
+1433036428 source:d:\programsoftd\c cpp hmwk\fighters\src\ctexture.cpp
 	"CTexture.h"
 	<SFML/Graphics.hpp>
 
-1432281320 d:\programsoftd\c cpp hmwk\fighters\include\ctexture.h
+1432604105 d:\programsoftd\c cpp hmwk\fighters\include\ctexture.h
 	<SFML/Graphics.hpp>
 
-1432283143 source:d:\programsoftd\c cpp hmwk\fighters\src\game.cpp
+1432988512 source:d:\programsoftd\c cpp hmwk\fighters\src\game.cpp
 	"Game.h"
+	"CRand.h"
+	<SFML/Graphics.hpp>
+	<memory.h>
+	<math.h>
+	<windows.h>
+	<iostream>
 
-1432283248 d:\programsoftd\c cpp hmwk\fighters\include\game.h
+1432988278 d:\programsoftd\c cpp hmwk\fighters\include\game.h
+	<SFML/Graphics.hpp>
+	"FlyingObject.h"
+	"CTexture.h"
+	"Enemy.h"
+	"Fighter.h"
+	"Bullet.h"
+
+1432546584 d:\programsoftd\c cpp hmwk\fighters\include\tdextern.h
+	<time.h>
+
+1432817696 source:d:\programsoftd\c cpp hmwk\fighters\src\crand.cpp
+	"CRand.h"
+	<windows.h>
+	<time.h>
+
+1432817505 d:\programsoftd\c cpp hmwk\fighters\include\crand.h
 

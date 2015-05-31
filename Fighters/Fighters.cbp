@@ -9,8 +9,9 @@
 			<Target title="Debug">
 				<Option output="bin/Debug/Fighters" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
-				<Option type="0" />
+				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="include" />
@@ -43,6 +44,7 @@
 			<Add directory="D:/ProgramsOfTD/C++ WINDOWS/SFML-2.3-windows-gcc-4.7.1-tdm-32-bit/SFML-2.3/lib" />
 		</Linker>
 		<Unit filename="include/Bullet.h" />
+		<Unit filename="include/CRand.h" />
 		<Unit filename="include/CTexture.h" />
 		<Unit filename="include/Enemy.h" />
 		<Unit filename="include/Fighter.h" />
@@ -50,6 +52,7 @@
 		<Unit filename="include/Game.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Bullet.cpp" />
+		<Unit filename="src/CRand.cpp" />
 		<Unit filename="src/CTexture.cpp" />
 		<Unit filename="src/Enemy.cpp" />
 		<Unit filename="src/Fighter.cpp" />
