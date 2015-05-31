@@ -5,14 +5,20 @@
 #include<math.h>
 #include<windows.h>
 #include<iostream>
+#include<string>
+using namespace std;
 #define TP_BULLET 20
 #define TP_ENEMY 30
 #define TP_NORMAL 44
 #define TP_BOSS 88
 #define TP_BOMB 987
 #define TP_EXPLODE 785
+#define TP_ENEMYBULLET 826
+#define MD_DEATH 77
+#define MD_LOST 65
 #define WIDTH 800
 #define HEIGHT 600
+
 
 
 
@@ -27,6 +33,11 @@ Game::Game(sf::RenderWindow *window,CTexture *picture)
     BulletUsage=0;
     Background.setTexture(picture->pBackground);
     score=0;
+    font.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Fonts\\Medhurst-regular.ttf");
+    ScoreText.setFont(font);
+    ScoreText.setCharacterSize(30);
+    ScoreText.setStyle(sf::Text::Bold);
+    ScoreText.setColor(sf::Color::Green);
 
 }
 
@@ -77,6 +88,10 @@ void Game::Entrance()
             }
             Move();
             collison();
+            char sc[20];
+            sprintf(sc,"Score:%d",score);
+            ScoreText.setString(sc);
+
 
 
             pWindow->clear();
@@ -104,14 +119,12 @@ void Game::Entrance()
                 case TP_EXPLODE:
                     pEnemy[i]->setPosition(pEnemy[i]->left,pEnemy[i]->top);
                     pWindow->draw(*(pEnemy[i]));
-                    pEnemy[i]->nCount--;
-                    if(pEnemy[i]->nCount<0)
-                    {
-                        deleteEnemy(i);
-                        mciSendString("seek bomb to 0", NULL, 0, NULL);
-                        mciSendString("play bomb", NULL, 0, NULL);
-                        addScore(1);
-                    }
+                    break;
+                case TP_ENEMYBULLET:
+                    pEnemy[i]->setPosition(pEnemy[i]->left,pEnemy[i]->top);
+                    pWindow->draw(*(pEnemy[i]));
+                    break;
+
                 }
 
             }
@@ -129,7 +142,7 @@ void Game::Entrance()
 
 
         }
-
+        pWindow->draw(ScoreText);
 
 
        //////////
@@ -158,7 +171,7 @@ void Game::Shoot()
        }
 }
 
-void Game::developEnemy(int type)
+void Game::developEnemy(int type,int m)
 {
     if(EnemyUsage>MAX_ENEMY-2)return ;
     if(type==TP_NORMAL)
@@ -169,14 +182,28 @@ void Game::developEnemy(int type)
        {
            if(pEnemy[i]==NULL)
            {
-               pEnemy[i]=new Enemy(left,0,62,60,1,picture);
-               pEnemy[i]->type=TP_NORMAL;
+               pEnemy[i]=new Enemy(left,0,62,60,1,picture,TP_NORMAL);
                EnemyUsage++;
                break;
            }
        }
 
     }
+    if(type==TP_ENEMYBULLET)
+        {
+            for(int i=0;i<=MAX_ENEMY;i++)
+               {
+                   if(pEnemy[i]==NULL)
+                   {
+                       pEnemy[i]=new Enemy(pEnemy[m]->left+pEnemy[m]->width/2-5,pEnemy[m]->top+pEnemy[m]->height,11,22,4,picture,TP_ENEMYBULLET);
+                       EnemyUsage++;
+                       break;
+                   }
+               }
+
+
+
+        }
 
 
 }
@@ -188,25 +215,43 @@ void Game::Move()
        {
            if(pEnemy[i]!=NULL)
            {
-               pEnemy[i]->top+=pEnemy[i]->speed;
-               if((pEnemy[i]->left)<(-pEnemy[i]->width))
+               if(pEnemy[i]->type==TP_NORMAL||pEnemy[i]->type==TP_ENEMYBULLET)
                {
-                   deleteEnemy(i);
-                   continue;
 
-               }
+                       pEnemy[i]->top+=pEnemy[i]->speed;
+                       if(pEnemy[i]->nCount>0)pEnemy[i]->nCount--;
+                        if(pEnemy[i]->nCount<=0)enemyShoot(i);
+                       if((pEnemy[i]->left)<(-pEnemy[i]->width))
+                       {
+                           deleteEnemy(i);
+                           continue;
 
-               if((pEnemy[i]->left)>WIDTH)
-               {
-                   deleteEnemy(i);
-                   continue;
+                       }
 
-               }
-               if((pEnemy[i]->top)>HEIGHT)
-               {
-                   deleteEnemy(i);
-                   continue;
-               }
+                      if((pEnemy[i]->left)>WIDTH)
+                       {
+                           deleteEnemy(i);
+                           continue;
+
+                       }
+                       if((pEnemy[i]->top)>HEIGHT)
+                       {
+                           deleteEnemy(i);
+                           continue;
+                       }
+                }
+                   if(pEnemy[i]->type==TP_EXPLODE)
+                    {
+                        pEnemy[i]->nCount--;
+                        if(pEnemy[i]->nCount<0)
+                        {
+                            addScore(1);
+                            deleteEnemy(i);
+                            mciSendString("seek explode to 0", NULL, 0, NULL);
+                            mciSendString("play explode", NULL, 0, NULL);
+                            continue;
+                        }
+                    }
 
            }
 
@@ -219,7 +264,7 @@ void Game::Move()
                if((pBullet[j]->top)<0)
                {
                    deleteBullet(j);
-                   continue;
+                   break;
 
                }
            }
@@ -239,11 +284,21 @@ void Game::collison()
     int collisons=0;
     for(int i=0;i<MAX_ENEMY;i++)
        {
+           int dx,dy,fighterCL;
+           dx=abs((pFighter->left+pFighter->width/2)-(pEnemy[i]->left+pEnemy[i]->width/2));
+           if(dx<(pFighter->width/2+pEnemy[i]->width/2))
+              fighterCL++;
+           dy=abs((pFighter->top+pFighter->height/2)-(pEnemy[i]->top+pEnemy[i]->height/2));
+           if(dx<(pFighter->height/2+pEnemy[i]->height/2))
+              fighterCL++;
+            if(fighterCL>=2)pFighter->death();
+           ////////enemy and our bullet
            for(int j=0;j<MAX_BULLET;j++)
            {
              if((pEnemy[i]!=NULL)&&(pBullet[j]!=NULL))
                 {
                     if(pEnemy[i]->type==TP_EXPLODE)continue;
+                    if(pEnemy[i]->type==TP_ENEMYBULLET)continue;
                     int dx,dy;
                     dx=abs((pBullet[j]->left+pBullet[j]->width/2)-(pEnemy[i]->left+pEnemy[i]->width/2));
                     if(dx<(pBullet[j]->width/2+pEnemy[i]->width/2))
@@ -261,4 +316,11 @@ void Game::collison()
            }
 
        }
+}
+
+void Game::enemyShoot(int m)
+{
+    int nRand=CRand::GetRandomNumber3();
+    if(nRand%50==6)developEnemy(TP_ENEMYBULLET,m);
+    pEnemy[m]->nCount=30;
 }

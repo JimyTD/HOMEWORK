@@ -15,7 +15,7 @@ class Game
     public:
         Game(sf::RenderWindow *window,CTexture *picture);
         virtual ~Game();
-        void developEnemy(int type);
+        void developEnemy(int type,int m=0);
         void deleteEnemy(int i)
         {
             delete(pEnemy[i]);
@@ -40,6 +40,7 @@ class Game
 	    {
 	        score+=num;
 	    }
+	    void enemyShoot(int m);
 
     protected:
     private:
@@ -52,6 +53,8 @@ class Game
         CTexture *picture;
         sf::Sprite Background;
         int score;
+        sf::Font font;
+        sf::Text ScoreText;
 
 };
 

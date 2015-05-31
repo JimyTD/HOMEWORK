@@ -7,7 +7,7 @@
 class Enemy:public FlyingObject
 {
     public:
-        Enemy(int nLeft,int nTop,int nWidth,int nHeight,int nSpeed,CTexture *ct);
+        Enemy(int nLeft,int nTop,int nWidth,int nHeight,int nSpeed,CTexture *ct,int nType);
         virtual ~Enemy();
         void draw();
         void explode();

@@ -3,6 +3,7 @@
 Fighter::Fighter(int nLeft,int nTop,int nWidth,int nHeight,int nSpeed,CTexture *ct):FlyingObject(nLeft,nTop,nWidth,nHeight,nSpeed)
 {
    setTexture(ct->pFighter);
+   life=3;
 
    /*   switch(type)
    {
@@ -41,4 +42,11 @@ void Fighter::draw()
     int a=0;
     a++;
     return ;
+}
+
+
+int Fighter::death()
+{
+    life--;
+    if(life<=0)return -1;
 }

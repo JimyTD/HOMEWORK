@@ -11,6 +11,7 @@ class CTexture
         static sf::Texture pEnemy1;
         static sf::Texture pEnemy2;
         static sf::Texture pBullet;
+        static sf::Texture pEBullet;
         static sf::Texture pBackground;
         static sf::Texture pBomb;
         void load();

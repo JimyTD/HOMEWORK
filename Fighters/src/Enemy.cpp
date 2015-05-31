@@ -5,10 +5,15 @@
 #define TP_BOSS 88
 #define TP_BOMB 987
 #define TP_EXPLODE 785
+#define TP_ENEMYBULLET 826
+#define WIDTH 800
+#define HEIGHT 600
 
-Enemy::Enemy(int nLeft,int nTop,int nWidth,int nHeight,int nSpeed,CTexture *ct):FlyingObject(nLeft,nTop,nWidth,nHeight,nSpeed)
+Enemy::Enemy(int nLeft,int nTop,int nWidth,int nHeight,int nSpeed,CTexture *ct,int nType):FlyingObject(nLeft,nTop,nWidth,nHeight,nSpeed)
 {
-    setTexture(ct->pEnemy1);
+    type=nType;
+    if(nType==TP_NORMAL)setTexture(ct->pEnemy1);
+    if(nType==TP_ENEMYBULLET)setTexture(ct->pEBullet);
     setPosition(nLeft,nTop);
     nCount=0;
 
