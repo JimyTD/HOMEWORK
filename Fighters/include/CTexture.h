@@ -14,6 +14,7 @@ class CTexture
         static sf::Texture pEBullet;
         static sf::Texture pBackground;
         static sf::Texture pBomb;
+        static sf::Texture pOver;
         void load();
 
 

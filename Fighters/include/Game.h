@@ -8,12 +8,22 @@
 #include"Bullet.h"
 #define MAX_BULLET 100
 #define MAX_ENEMY 120
+#define MD_NORMAL 555
+#define MD_DEATH 666
+#define MD_OVER 777
+#define TP_BULLET 20
+#define TP_ENEMY 30
+#define TP_NORMAL 44
+#define TP_BOSS 88
+#define TP_BOMB 987
+#define TP_EXPLODE 785
+#define TP_ENEMYBULLET 826
 /*GAME类总控整个进程。注意根据计时器循环处理敌人生成、敌人移动、碰撞处理。*/
 class CTexture;
 class Game
 {
     public:
-        Game(sf::RenderWindow *window,CTexture *picture);
+        Game(sf::RenderWindow *window,CTexture *picture,int nMode);
         virtual ~Game();
         void developEnemy(int type,int m=0);
         void deleteEnemy(int i)
@@ -41,6 +51,10 @@ class Game
 	        score+=num;
 	    }
 	    void enemyShoot(int m);
+	    void GameOver()
+	    {
+            mode=MD_OVER;
+	    }
 
     protected:
     private:
@@ -52,9 +66,11 @@ class Game
         int BulletUsage;
         CTexture *picture;
         sf::Sprite Background;
+        sf::Sprite Lose;
         int score;
         sf::Font font;
         sf::Text ScoreText;
+        int mode;
 
 };
 

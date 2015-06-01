@@ -7,6 +7,7 @@ sf::Texture CTexture::pBullet;
 sf::Texture CTexture::pEBullet;
 sf::Texture CTexture::pBackground;
 sf::Texture CTexture::pBomb;
+sf::Texture CTexture::pOver;
 CTexture::CTexture()
 {
     //ctor
@@ -25,4 +26,6 @@ void CTexture::load()
     this->pBomb.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\bomb.png");
     this->pBackground.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\bkground1.png");
     this->pEBullet.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\ENEMYBULLET.png");
+    this->pOver.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\gg.png");
+
 }

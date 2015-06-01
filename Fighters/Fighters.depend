@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1432987655 source:d:\programsoftd\c cpp hmwk\fighters\main.cpp
+1433174559 source:d:\programsoftd\c cpp hmwk\fighters\main.cpp
 	<windows.h>
 	<SFML/Graphics.hpp>
 	"Enemy.h"
@@ -387,10 +387,11 @@
 	<string>
 	<vector>
 
-1433044729 source:d:\programsoftd\c cpp hmwk\fighters\src\fighter.cpp
+1433174432 source:d:\programsoftd\c cpp hmwk\fighters\src\fighter.cpp
 	"Fighter.h"
+	<iostream>
 
-1433044729 d:\programsoftd\c cpp hmwk\fighters\include\fighter.h
+1433172315 d:\programsoftd\c cpp hmwk\fighters\include\fighter.h
 	<SFML/Graphics.hpp>
 	"FlyingObject.h"
 	"CTexture.h"
@@ -418,14 +419,14 @@
 	"FlyingObject.h"
 	"CTexture.h"
 
-1433041450 source:d:\programsoftd\c cpp hmwk\fighters\src\ctexture.cpp
+1433170888 source:d:\programsoftd\c cpp hmwk\fighters\src\ctexture.cpp
 	"CTexture.h"
 	<SFML/Graphics.hpp>
 
-1433041450 d:\programsoftd\c cpp hmwk\fighters\include\ctexture.h
+1433170888 d:\programsoftd\c cpp hmwk\fighters\include\ctexture.h
 	<SFML/Graphics.hpp>
 
-1433043584 source:d:\programsoftd\c cpp hmwk\fighters\src\game.cpp
+1433174432 source:d:\programsoftd\c cpp hmwk\fighters\src\game.cpp
 	"Game.h"
 	"CRand.h"
 	<SFML/Graphics.hpp>
@@ -435,7 +436,7 @@
 	<iostream>
 	<string>
 
-1433040901 d:\programsoftd\c cpp hmwk\fighters\include\game.h
+1433171257 d:\programsoftd\c cpp hmwk\fighters\include\game.h
 	<SFML/Graphics.hpp>
 	"FlyingObject.h"
 	"CTexture.h"

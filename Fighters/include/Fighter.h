@@ -14,6 +14,7 @@ class Fighter:public FlyingObject
         void explode();
         int life;
         int type;
+        int nCount;
         CTexture *ct;
         int addSpeed;
         int death();

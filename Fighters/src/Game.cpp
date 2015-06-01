@@ -14,8 +14,9 @@ using namespace std;
 #define TP_BOMB 987
 #define TP_EXPLODE 785
 #define TP_ENEMYBULLET 826
-#define MD_DEATH 77
-#define MD_LOST 65
+#define MD_NORMAL 555
+#define MD_DEATH 666
+#define MD_OVER 777
 #define WIDTH 800
 #define HEIGHT 600
 
@@ -23,7 +24,7 @@ using namespace std;
 
 
 class CRand;
-Game::Game(sf::RenderWindow *window,CTexture *picture)
+Game::Game(sf::RenderWindow *window,CTexture *picture,int nMode)
 {
     pWindow=window;
     this->picture=picture;
@@ -32,12 +33,14 @@ Game::Game(sf::RenderWindow *window,CTexture *picture)
     EnemyUsage=0;
     BulletUsage=0;
     Background.setTexture(picture->pBackground);
+    Lose.setTexture(picture->pOver);
     score=0;
     font.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Fonts\\Medhurst-regular.ttf");
     ScoreText.setFont(font);
     ScoreText.setCharacterSize(30);
     ScoreText.setStyle(sf::Text::Bold);
     ScoreText.setColor(sf::Color::Green);
+    mode=nMode;
 
 }
 
@@ -80,7 +83,8 @@ void Game::Entrance()
         }
             ////////////////////////////key answering///////////////////////
             /////////////change stuffs//////////////////////
-
+        if(mode!=MD_OVER)
+        {
             int nRand=CRand::GetRandomNumber3()%100;////new enemy
             if(nRand==1)
             {
@@ -91,58 +95,85 @@ void Game::Entrance()
             char sc[20];
             sprintf(sc,"Score:%d",score);
             ScoreText.setString(sc);
+        }
 
 
 
             pWindow->clear();
  /////////////////////////Draw the stuffs.////////////////////////
-        pWindow->draw(Background);
-        if(pFighter->speed<0)pFighter->speed+=pFighter->addSpeed;
-        if(pFighter->speed>0)pFighter->speed-=pFighter->addSpeed;
-        if(pFighter->left<=0&&pFighter->speed<0)pFighter->speed=0;
-        if(pFighter->left>=800-pFighter->width&&pFighter->speed>0)pFighter->speed=0;
-        //THE EDGE.
-        pFighter->left+=pFighter->speed;
-        pFighter->setPosition(pFighter->left,pFighter->top);
 
-        pWindow->draw(*pFighter);
-        for(int i=0;i<MAX_BULLET;i++)
-        {
-            if(pEnemy[i]!=NULL)
+       if(mode==MD_NORMAL||mode==MD_DEATH)
+       {
+            pWindow->draw(Background);
+            if(pFighter->speed<0)pFighter->speed+=pFighter->addSpeed;
+            if(pFighter->speed>0)pFighter->speed-=pFighter->addSpeed;
+            if(pFighter->left<=0&&pFighter->speed<0)pFighter->speed=0;
+            if(pFighter->left>=800-pFighter->width&&pFighter->speed>0)pFighter->speed=0;
+            //THE EDGE.
+            pFighter->left+=pFighter->speed;
+            pFighter->setPosition(pFighter->left,pFighter->top);
+
+            if(pFighter->nCount%10<=4)
+            pWindow->draw(*pFighter);
+            if(mode==MD_DEATH)
             {
-                switch(pEnemy[i]->type)
+                if(pFighter->nCount==120)pFighter->setTexture(picture->pFighter);
+                pFighter->nCount--;
+                if(pFighter->nCount<=0)
                 {
-                case TP_NORMAL:
-                    pEnemy[i]->setPosition(pEnemy[i]->left,pEnemy[i]->top);
-                    pWindow->draw(*(pEnemy[i]));
-                    break;
-                case TP_EXPLODE:
-                    pEnemy[i]->setPosition(pEnemy[i]->left,pEnemy[i]->top);
-                    pWindow->draw(*(pEnemy[i]));
-                    break;
-                case TP_ENEMYBULLET:
-                    pEnemy[i]->setPosition(pEnemy[i]->left,pEnemy[i]->top);
-                    pWindow->draw(*(pEnemy[i]));
-                    break;
+                    mode=MD_NORMAL;
+                    pFighter->type=TP_NORMAL;
+                }
+            }
+            for(int i=0;i<MAX_BULLET;i++)
+            {
+                if(pEnemy[i]!=NULL)
+                {
+                    switch(pEnemy[i]->type)
+                    {
+                    case TP_NORMAL:
+                        pEnemy[i]->setPosition(pEnemy[i]->left,pEnemy[i]->top);
+                        pWindow->draw(*(pEnemy[i]));
+                        break;
+                    case TP_EXPLODE:
+                        pEnemy[i]->setPosition(pEnemy[i]->left,pEnemy[i]->top);
+                        pWindow->draw(*(pEnemy[i]));
+                        break;
+                    case TP_ENEMYBULLET:
+                        pEnemy[i]->setPosition(pEnemy[i]->left,pEnemy[i]->top);
+                        pWindow->draw(*(pEnemy[i]));
+                        break;
+
+                    }
+
+                }
+            }
+            for(int i=0;i<MAX_ENEMY;i++)
+            {
+
+
+                if(pBullet[i]!=NULL)
+                {
+                    pBullet[i]->setPosition(pBullet[i]->left,pBullet[i]->top);
+                    pWindow->draw(*(pBullet[i]));
 
                 }
 
+
             }
-        }
-        for(int i=0;i<MAX_ENEMY;i++)
+            pWindow->draw(ScoreText);
+       }
+    if(mode==MD_OVER)
         {
-
-
-            if(pBullet[i]!=NULL)
-            {
-                pBullet[i]->setPosition(pBullet[i]->left,pBullet[i]->top);
-                pWindow->draw(*(pBullet[i]));
-
-            }
-
-
+            pWindow->draw(Lose);
+            pWindow->draw(ScoreText);
         }
-        pWindow->draw(ScoreText);
+
+
+
+
+
+
 
 
        //////////
@@ -157,7 +188,6 @@ void Game::Entrance()
 
 void Game::Shoot()
 {
-    //std::cout<<BulletUsage;
     if(BulletUsage>MAX_BULLET-2)return;
     for(int i=0;i<=99;i++)
        {
@@ -195,7 +225,7 @@ void Game::developEnemy(int type,int m)
                {
                    if(pEnemy[i]==NULL)
                    {
-                       pEnemy[i]=new Enemy(pEnemy[m]->left+pEnemy[m]->width/2-5,pEnemy[m]->top+pEnemy[m]->height,11,22,4,picture,TP_ENEMYBULLET);
+                       pEnemy[i]=new Enemy(pEnemy[m]->left+pEnemy[m]->width/2-5,pEnemy[m]->top+pEnemy[m]->height,12,25,4,picture,TP_ENEMYBULLET);
                        EnemyUsage++;
                        break;
                    }
@@ -281,17 +311,30 @@ void Game::Move()
 
 void Game::collison()
 {
+
     int collisons=0;
     for(int i=0;i<MAX_ENEMY;i++)
        {
-           int dx,dy,fighterCL;
-           dx=abs((pFighter->left+pFighter->width/2)-(pEnemy[i]->left+pEnemy[i]->width/2));
-           if(dx<(pFighter->width/2+pEnemy[i]->width/2))
-              fighterCL++;
-           dy=abs((pFighter->top+pFighter->height/2)-(pEnemy[i]->top+pEnemy[i]->height/2));
-           if(dx<(pFighter->height/2+pEnemy[i]->height/2))
-              fighterCL++;
-            if(fighterCL>=2)pFighter->death();
+           if(mode!=MD_DEATH)
+           {
+               if(pEnemy[i]==NULL)continue;
+               int Dx=0,Dy=0,fighterCL=0;
+               Dx=abs((pFighter->left+pFighter->width/2)-(pEnemy[i]->left+pEnemy[i]->width/2));
+               if(Dx<(pFighter->width/2+pEnemy[i]->width/2))
+                  fighterCL++;
+               Dy=abs((pFighter->top+pFighter->height/2)-(pEnemy[i]->top+pEnemy[i]->height/2));
+               if(Dy<(pFighter->height/2+pEnemy[i]->height/2))
+                  fighterCL++;
+                if(fighterCL>=2)///////////death
+                {
+                   if(pEnemy[i]->type==TP_ENEMYBULLET)deleteEnemy(i);
+                   else pEnemy[i]->explode();
+                   int IsLose=pFighter->death();
+                   if(IsLose==0)mode=MD_DEATH;
+                   if(IsLose==-1)mode=MD_OVER;
+                }
+           }
+
            ////////enemy and our bullet
            for(int j=0;j<MAX_BULLET;j++)
            {
@@ -300,7 +343,7 @@ void Game::collison()
                     if(pEnemy[i]->type==TP_EXPLODE)continue;
                     if(pEnemy[i]->type==TP_ENEMYBULLET)continue;
                     int dx,dy;
-                    dx=abs((pBullet[j]->left+pBullet[j]->width/2)-(pEnemy[i]->left+pEnemy[i]->width/2));
+                    dx=abs((pBullet[j]->left+pBullet[j]->width/2)-(pEnemy[i]->left+pEnemy[i]->width/2));//
                     if(dx<(pBullet[j]->width/2+pEnemy[i]->width/2))
                         collisons++;
                     dy=abs((pBullet[j]->top+pBullet[j]->height/2)-(pEnemy[i]->top+pEnemy[i]->height/2));
@@ -321,6 +364,6 @@ void Game::collison()
 void Game::enemyShoot(int m)
 {
     int nRand=CRand::GetRandomNumber3();
-    if(nRand%50==6)developEnemy(TP_ENEMYBULLET,m);
-    pEnemy[m]->nCount=30;
+    if(nRand%40==6)developEnemy(TP_ENEMYBULLET,m);
+    pEnemy[m]->nCount=60;
 }
