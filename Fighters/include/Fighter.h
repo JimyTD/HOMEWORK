@@ -16,7 +16,7 @@ class Fighter:public FlyingObject
         int type;
         int nCount;
         CTexture *ct;
-        int addSpeed;
+     //   int addSpeed;
         int death();
     protected:
     private:

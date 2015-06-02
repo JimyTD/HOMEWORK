@@ -27,7 +27,7 @@ Fighter::Fighter(int nLeft,int nTop,int nWidth,int nHeight,int nSpeed,CTexture *
     break;
     }//////*/
     setPosition(nLeft,nTop);
-    addSpeed=2;
+  //  addSpeed=2;
 }
 
 Fighter::~Fighter()

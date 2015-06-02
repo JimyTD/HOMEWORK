@@ -20,12 +20,7 @@ int CRand::GetRandomNumber()
     return number;
 }
 
-int CRand::GetRandomNumber2()
-{
-    srand(GetTickCount()+2378);
-    int number = rand();
-    return number;
-}
+
 
 void CRand::Prepare()
 {

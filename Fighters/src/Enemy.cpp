@@ -9,13 +9,14 @@
 #define WIDTH 800
 #define HEIGHT 600
 
-Enemy::Enemy(int nLeft,int nTop,int nWidth,int nHeight,int nSpeed,CTexture *ct,int nType):FlyingObject(nLeft,nTop,nWidth,nHeight,nSpeed)
+Enemy::Enemy(int nLeft,int nTop,int nWidth,int nHeight,int nSpeed,CTexture *ct,int nType,int nScore,int life):FlyingObject(nLeft,nTop,nWidth,nHeight,nSpeed)
 {
     type=nType;
     if(nType==TP_NORMAL)setTexture(ct->pEnemy1);
     if(nType==TP_ENEMYBULLET)setTexture(ct->pEBullet);
     setPosition(nLeft,nTop);
     nCount=0;
+    score=nScore;
 
 }
 

@@ -8,7 +8,6 @@ class CRand
         CRand();
         virtual ~CRand();
         static int  GetRandomNumber();
-        static int GetRandomNumber2();
         static int GetRandomNumber3();
         static void Prepare();
     protected:

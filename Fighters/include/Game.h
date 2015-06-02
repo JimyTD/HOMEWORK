@@ -11,6 +11,7 @@
 #define MD_NORMAL 555
 #define MD_DEATH 666
 #define MD_OVER 777
+#define MD_STAGEON 856
 #define TP_BULLET 20
 #define TP_ENEMY 30
 #define TP_NORMAL 44
@@ -55,6 +56,14 @@ class Game
 	    {
             mode=MD_OVER;
 	    }
+	    void promotion()
+	    {
+	        stage++;
+	        mode=MD_STAGEON;
+	        prCount=240;
+	    }
+	    void clearAll();
+
 
     protected:
     private:
@@ -71,6 +80,10 @@ class Game
         sf::Font font;
         sf::Text ScoreText;
         int mode;
+        int shootCD;
+        int stage;
+        int Cheat;
+        int prCount;
 
 };
 

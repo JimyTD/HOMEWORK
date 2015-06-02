@@ -10,6 +10,8 @@
 #define MD_NORMAL 555
 #define MD_DEATH 666
 #define MD_OVER 777
+#define MD_STAGEON 856
+#define MD_BEGIN 745
 #define WIDTH 800
 #define HEIGHT 600
 #include<windows.h>
@@ -26,12 +28,12 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "Fighter!",sf::Style::Close);
     window.setFramerateLimit(60);
-    mciSendString("open .\\music\\ring.wav alias ring", NULL, 0, NULL);
-    //mciSendString("open .\\music\\bomb!.mp3 alias explode", NULL, 0, NULL);
-    mciSendString("play ring", NULL, 0, NULL);
+    mciSendString("open .\\music\\begin.mp3 alias bgm1", NULL, 0, NULL);
+    mciSendString("open .\\music\\Explosion7.wav alias explode", NULL, 0, NULL);
+    mciSendString("play bgm1", NULL, 0, NULL);
     CTexture pictures;
     pictures.load();
-    Fighter a(360,500,60,66,0,&pictures);
+    Fighter a(360,500,60,66,8,&pictures);
     Game mainGame(&window,&pictures,MD_NORMAL);
     mainGame.SetFighter(&a);
     //Preparations.

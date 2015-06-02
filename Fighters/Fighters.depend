@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1433174559 source:d:\programsoftd\c cpp hmwk\fighters\main.cpp
+1433210579 source:d:\programsoftd\c cpp hmwk\fighters\main.cpp
 	<windows.h>
 	<SFML/Graphics.hpp>
 	"Enemy.h"
@@ -387,11 +387,11 @@
 	<string>
 	<vector>
 
-1433174432 source:d:\programsoftd\c cpp hmwk\fighters\src\fighter.cpp
+1433202034 source:d:\programsoftd\c cpp hmwk\fighters\src\fighter.cpp
 	"Fighter.h"
 	<iostream>
 
-1433172315 d:\programsoftd\c cpp hmwk\fighters\include\fighter.h
+1433202034 d:\programsoftd\c cpp hmwk\fighters\include\fighter.h
 	<SFML/Graphics.hpp>
 	"FlyingObject.h"
 	"CTexture.h"
@@ -402,12 +402,12 @@
 1432463955 source:d:\programsoftd\c cpp hmwk\fighters\src\flyingobject.cpp
 	"FlyingObject.h"
 
-1433041703 d:\programsoftd\c cpp hmwk\fighters\include\enemy.h
+1433209816 d:\programsoftd\c cpp hmwk\fighters\include\enemy.h
 	<SFML/Graphics.hpp>
 	"FlyingObject.h"
 	"CTexture.h"
 
-1433041742 source:d:\programsoftd\c cpp hmwk\fighters\src\enemy.cpp
+1433209825 source:d:\programsoftd\c cpp hmwk\fighters\src\enemy.cpp
 	"Enemy.h"
 
 1432817270 source:d:\programsoftd\c cpp hmwk\fighters\src\bullet.cpp
@@ -426,7 +426,7 @@
 1433170888 d:\programsoftd\c cpp hmwk\fighters\include\ctexture.h
 	<SFML/Graphics.hpp>
 
-1433174432 source:d:\programsoftd\c cpp hmwk\fighters\src\game.cpp
+1433209705 source:d:\programsoftd\c cpp hmwk\fighters\src\game.cpp
 	"Game.h"
 	"CRand.h"
 	<SFML/Graphics.hpp>
@@ -436,7 +436,7 @@
 	<iostream>
 	<string>
 
-1433171257 d:\programsoftd\c cpp hmwk\fighters\include\game.h
+1433207329 d:\programsoftd\c cpp hmwk\fighters\include\game.h
 	<SFML/Graphics.hpp>
 	"FlyingObject.h"
 	"CTexture.h"
@@ -447,10 +447,10 @@
 1432546584 d:\programsoftd\c cpp hmwk\fighters\include\tdextern.h
 	<time.h>
 
-1432817696 source:d:\programsoftd\c cpp hmwk\fighters\src\crand.cpp
+1433207681 source:d:\programsoftd\c cpp hmwk\fighters\src\crand.cpp
 	"CRand.h"
 	<windows.h>
 	<time.h>
 
-1432817505 d:\programsoftd\c cpp hmwk\fighters\include\crand.h
+1433207681 d:\programsoftd\c cpp hmwk\fighters\include\crand.h
 
