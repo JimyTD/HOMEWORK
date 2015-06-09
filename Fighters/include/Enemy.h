@@ -11,10 +11,8 @@ class Enemy:public FlyingObject
         virtual ~Enemy();
         void draw();
         void explode();
-        CTexture *ct;
         int life;
         int type;
-        int nCount;
         int score;
     protected:
     private:

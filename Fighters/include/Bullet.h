@@ -7,10 +7,9 @@
 class Bullet:public FlyingObject
 {
     public:
-        Bullet(int nLeft,int nTop,int nWidth,int nHeight,int nSpeed,CTexture *ct);
+        Bullet(int nLeft,int nTop,int nWidth,int nHeight,int nSpeed,CTexture *ct,int nType,int nCount=0);
         virtual ~Bullet();
         int type;
-        CTexture *ct;
     protected:
     private:
 

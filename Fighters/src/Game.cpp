@@ -1,5 +1,6 @@
 #include "Game.h"
 #include"CRand.h"
+#include"CTexture.h"
 #include <SFML/Graphics.hpp>
 #include<memory.h>
 #include<math.h>
@@ -7,6 +8,8 @@
 #include<iostream>
 #include<string>
 using namespace std;
+#define MAGIC_WIDTH 960
+#define MAGIC_HEIGHT 768
 #define TP_BULLET 20
 #define TP_ENEMY 30
 #define TP_NORMAL 44
@@ -14,10 +17,12 @@ using namespace std;
 #define TP_BOMB 987
 #define TP_EXPLODE 785
 #define TP_ENEMYBULLET 826
+#define TP_MAGIC 741
 #define MD_NORMAL 555
 #define MD_DEATH 666
 #define MD_OVER 777
 #define MD_STAGEON 856
+#define MD_NEWGAME 773
 #define OPEN 852
 #define CLOSED 741
 #define WIDTH 800
@@ -37,18 +42,25 @@ Game::Game(sf::RenderWindow *window,CTexture *picture,int nMode)
     BulletUsage=0;
     Background.setTexture(picture->pBackground);
     Lose.setTexture(picture->pOver);
+    New.setTexture(picture->pNewGame);
     score=0;
     font.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Fonts\\Medhurst-regular.ttf");
     ScoreText.setFont(font);
     ScoreText.setCharacterSize(30);
     ScoreText.setStyle(sf::Text::Bold);
     ScoreText.setColor(sf::Color::Green);
+    StuffText.setFont(font);
+    StuffText.setCharacterSize(20);
+    StuffText.setStyle(sf::Text::Bold);
+    StuffText.setColor(sf::Color::Red);
     mode=nMode;
     shootCD=0;
     stage=1;
     Cheat=CLOSED;
     prCount=0;
     CRand::Prepare();
+    shield=3;
+    bomb=1;
 }
 
 Game::~Game()
@@ -83,9 +95,9 @@ void Game::Entrance()
             if(pFighter->top>=10)pFighter->top-=pFighter->speed;
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-            Shoot();
+            Shoot(TP_NORMAL);
         }
 
         while (pWindow->pollEvent(event))
@@ -108,26 +120,42 @@ void Game::Entrance()
                         break;
                     }
                 }
+                if(mode==MD_NEWGAME)if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Return))
+                {
+                    clearAll();
+                    mode=MD_NORMAL;
+                    break;
+                }
+                if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Space))
+                {
+                    if(bomb>0)
+                    {
+                        Shoot(TP_MAGIC);
+                        bomb--;
+                    }
+                }
             }
                 ////////////////////////////key answering///////////////////////
                 /////////////change stuffs//////////////////////
             if(mode!=MD_OVER&&mode!=MD_STAGEON)
             {
                 if(stage==1)
-                    if(score>=20)promotion();
+                    if(score>=200)promotion();
                 if(stage==2)
-                    if(score>=50)promotion();
-                int nRand=CRand::GetRandomNumber()%100;////new enemy
+                    if(score>=500)promotion();
+                int nRand=CRand::GetRandomNumber()%10;////new enemy
                 if(nRand==1)
                 {
                     developEnemy(TP_NORMAL);
                 }
                 if(shootCD>0)shootCD--;
                 Move();
-                collison();
+                if(mode!=MD_NEWGAME)collison();
                 char sc[20];
                 sprintf(sc,"Score:%d\nLife:%d\nStage:%d",score,pFighter->life,stage);
                 ScoreText.setString(sc);
+                sprintf(sc,"Shield:%d\nBigBomb:%d\n",shield,bomb);
+                StuffText.setString(sc);
             }
 
 
@@ -135,23 +163,40 @@ void Game::Entrance()
                 pWindow->clear();
      /////////////////////////Draw the stuffs.////////////////////////
 
-           if(mode==MD_NORMAL||mode==MD_DEATH)
+           if(mode==MD_NORMAL||mode==MD_DEATH||mode==MD_NEWGAME)
            {
-                pWindow->draw(Background);
+                if(mode!=MD_NEWGAME)pWindow->draw(Background);
 
                 pFighter->setPosition(pFighter->left,pFighter->top);
-                if(pFighter->nCount%10<=4)
-                pWindow->draw(*pFighter);
-                ////////
-                if(mode==MD_DEATH)
+                if(mode!=MD_NEWGAME)
                 {
-                    if(pFighter->nCount==120)pFighter->setTexture(picture->pFighter);
-                    pFighter->nCount--;
-                    if(pFighter->nCount<=0)
+                    if(pFighter->nCount%10<=4)
+                        pWindow->draw(*pFighter);
+                    ////////
+                    if(mode==MD_DEATH)
                     {
-                        mode=MD_NORMAL;
-                        pFighter->type=TP_NORMAL;
+                        if(pFighter->nCount==120)pFighter->setTexture(picture->pFighter);
+                        pFighter->nCount--;
+                        if(pFighter->nCount<=0)
+                        {
+                            mode=MD_NORMAL;
+                            pFighter->type=TP_NORMAL;
+                        }
                     }
+                }
+
+                for(int i=0;i<MAX_ENEMY;i++)
+                {
+
+
+                    if(pBullet[i]!=NULL)
+                    {
+                        pBullet[i]->setPosition(pBullet[i]->left,pBullet[i]->top);
+                        pWindow->draw(*(pBullet[i]));
+
+                    }
+
+
                 }
                 for(int i=0;i<MAX_BULLET;i++)
                 {
@@ -176,20 +221,13 @@ void Game::Entrance()
 
                     }
                 }
-                for(int i=0;i<MAX_ENEMY;i++)
+                if(mode!=MD_NEWGAME)
                 {
-
-
-                    if(pBullet[i]!=NULL)
-                    {
-                        pBullet[i]->setPosition(pBullet[i]->left,pBullet[i]->top);
-                        pWindow->draw(*(pBullet[i]));
-
-                    }
-
-
+                    pWindow->draw(ScoreText);
+                    StuffText.setPosition(0,500);
+                    pWindow->draw(StuffText);
                 }
-                pWindow->draw(ScoreText);
+                if(mode==MD_NEWGAME) pWindow->draw(New);
            }
         if(mode==MD_OVER)
             {
@@ -223,7 +261,7 @@ void Game::Entrance()
 }
 
 
-void Game::Shoot()
+void Game::Shoot(int nType)
 {
     if(BulletUsage>MAX_BULLET-2)return;
     if(shootCD>0)return ;
@@ -233,7 +271,8 @@ void Game::Shoot()
        {
            if(pBullet[i]==NULL)
            {
-               pBullet[i]=new Bullet(pFighter->left+pFighter->width/2-14,pFighter->top,28,60,10,picture);
+               if(nType==TP_NORMAL)pBullet[i]=new Bullet(pFighter->left+pFighter->width/2-7,pFighter->top,14,30,10,picture,nType);
+               if(nType==TP_MAGIC)pBullet[i]=new Bullet(pFighter->left+pFighter->width/2-MAGIC_WIDTH/5/2,pFighter->top-300,MAGIC_WIDTH/5*1.8,MAGIC_HEIGHT/4*1.8,0,picture,nType,120);
                BulletUsage++;
                return;
            }
@@ -330,10 +369,23 @@ void Game::Move()
            if(pBullet[j]!=NULL)
            {
                pBullet[j]->top-=pBullet[j]->speed;//Bullet heads front.
+               if(pBullet[j]->type==TP_MAGIC)
+               {
+                   if(pBullet[j]->nCount>0)
+                   {
+                       picture->MagicPlay(pBullet[j]);//(*FlyingObject)(pBullet[j])
+                       rectExplosion(pBullet[j]->left+pBullet[j]->width/2,pBullet[j]->top+pBullet[j]->height/2,pBullet[j]->width,pBullet[j]->height);
+                       if(pBullet[j]->nCount<=0)
+                       {
+                           deleteBullet(j);
+                           continue;
+                       }
+                   }
+               }
                if((pBullet[j]->top)<0)
                {
-                   deleteBullet(j);
-                   break;
+                   if(pBullet[j]->type!=TP_MAGIC)deleteBullet(j);
+                   continue;
 
                }
            }
@@ -387,10 +439,12 @@ void Game::collison()
            ////////enemy and our bullet
            for(int j=0;j<MAX_BULLET;j++)
            {
+
              if((pEnemy[i]!=NULL)&&(pBullet[j]!=NULL))
                 {
                     if(pEnemy[i]->type==TP_EXPLODE)continue;
                     if(pEnemy[i]->type==TP_ENEMYBULLET)continue;
+                    if(pBullet[j]->type==TP_MAGIC)continue;
                     int dx,dy;
                     dx=abs((pBullet[j]->left+pBullet[j]->width/2)-(pEnemy[i]->left+pEnemy[i]->width/2));//
                     if(dx<(pBullet[j]->width/2+pEnemy[i]->width/2))
@@ -428,5 +482,34 @@ void Game::clearAll()
             delete(pBullet[i]);
     memset(pEnemy,NULL,MAX_ENEMY*sizeof(Enemy*));
     memset(pBullet,NULL,MAX_BULLET*sizeof(Bullet*));
+
+}
+
+
+void Game::rectExplosion(int heartx,int hearty,int width,int height)
+{
+     int collisons=0;
+     for(int i=0;i<MAX_ENEMY;i++)
+           {
+             if(pEnemy[i]!=NULL)
+                {
+                    if(pEnemy[i]->type==TP_EXPLODE)continue;
+                    //if(pEnemy[i]->type==TP_ENEMYBULLET)continue;
+                    int dx,dy;
+                    dx=abs(heartx-(pEnemy[i]->left+pEnemy[i]->width/2));//
+                    if(dx<(width/2+pEnemy[i]->width/2))
+                        collisons++;
+                    dy=abs(hearty-(pEnemy[i]->top+pEnemy[i]->height/2));
+                    if(dy<height/2+(pEnemy[i]->height/2))
+                        collisons++;
+                    if(collisons>=2)
+                    {
+                        std::cout<<collisons;
+                        addScore(pEnemy[i]->score);
+                        pEnemy[i]->explode();
+                    }
+                    collisons=0;
+                }
+           }
 
 }

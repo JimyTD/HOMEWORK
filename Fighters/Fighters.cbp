@@ -50,6 +50,7 @@
 		<Unit filename="include/Fighter.h" />
 		<Unit filename="include/FlyingObject.h" />
 		<Unit filename="include/Game.h" />
+		<Unit filename="include/Stuff.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Bullet.cpp" />
 		<Unit filename="src/CRand.cpp" />
@@ -58,6 +59,7 @@
 		<Unit filename="src/Fighter.cpp" />
 		<Unit filename="src/FlyingObject.cpp" />
 		<Unit filename="src/Game.cpp" />
+		<Unit filename="src/Stuff.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

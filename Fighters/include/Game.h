@@ -12,6 +12,7 @@
 #define MD_DEATH 666
 #define MD_OVER 777
 #define MD_STAGEON 856
+#define MD_NEWGAME 773
 #define TP_BULLET 20
 #define TP_ENEMY 30
 #define TP_NORMAL 44
@@ -42,7 +43,7 @@ class Game
         void Move();
         void collison();
         void Entrance();
-	    void Shoot();
+	    void Shoot(int nType);
 	    void SetFighter(Fighter *p)
 	    {
 	        pFighter=p;
@@ -63,6 +64,15 @@ class Game
 	        prCount=240;
 	    }
 	    void clearAll();
+	    void getShield()
+	    {
+	        shield++;
+	    }
+	    void getBigBomb()
+	    {
+	        bomb++;
+	    }
+	    void rectExplosion(int heartx,int hearty,int width,int height);
 
 
     protected:
@@ -76,14 +86,19 @@ class Game
         CTexture *picture;
         sf::Sprite Background;
         sf::Sprite Lose;
+        sf::Sprite New;
         int score;
         sf::Font font;
         sf::Text ScoreText;
+        sf::Text StuffText;
         int mode;
         int shootCD;
         int stage;
         int Cheat;
         int prCount;
+        int shield;
+        int bomb;
+
 
 };
 

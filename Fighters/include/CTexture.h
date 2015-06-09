@@ -1,7 +1,8 @@
 #ifndef CTEXTURE_H
 #define CTEXTURE_H
 #include <SFML/Graphics.hpp>
-
+#include"FlyingObject.h"
+class FlyingObject;
 class CTexture
 {
     public:
@@ -15,7 +16,10 @@ class CTexture
         static sf::Texture pBackground;
         static sf::Texture pBomb;
         static sf::Texture pOver;
+        static sf::Texture pBigBomb;
+        static sf::Texture pNewGame;
         void load();
+        int MagicPlay(FlyingObject *object);
 
 
     protected:

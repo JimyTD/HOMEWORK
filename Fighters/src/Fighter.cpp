@@ -8,11 +8,10 @@
 #define TP_EXPLODE 785
 #define TP_ENEMYBULLET 826
 
-Fighter::Fighter(int nLeft,int nTop,int nWidth,int nHeight,int nSpeed,CTexture *ct):FlyingObject(nLeft,nTop,nWidth,nHeight,nSpeed)
+Fighter::Fighter(int nLeft,int nTop,int nWidth,int nHeight,int nSpeed,CTexture *ct):FlyingObject(nLeft,nTop,nWidth,nHeight,nSpeed,ct,0)
 {
    setTexture(ct->pFighter);
    life=3;
-   nCount=0;
 
    /*   switch(type)
    {

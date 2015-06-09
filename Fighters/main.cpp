@@ -11,7 +11,7 @@
 #define MD_DEATH 666
 #define MD_OVER 777
 #define MD_STAGEON 856
-#define MD_BEGIN 745
+#define MD_NEWGAME 773
 #define WIDTH 800
 #define HEIGHT 600
 #include<windows.h>
@@ -34,7 +34,7 @@ int main()
     CTexture pictures;
     pictures.load();
     Fighter a(360,500,60,66,8,&pictures);
-    Game mainGame(&window,&pictures,MD_NORMAL);
+    Game mainGame(&window,&pictures,MD_NEWGAME);
     mainGame.SetFighter(&a);
     //Preparations.
     /////Entrance of event loop
