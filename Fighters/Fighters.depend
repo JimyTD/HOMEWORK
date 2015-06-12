@@ -391,7 +391,7 @@
 	"Fighter.h"
 	<iostream>
 
-1433813134 d:\programsoftd\c cpp hmwk\fighters\include\fighter.h
+1434092321 d:\programsoftd\c cpp hmwk\fighters\include\fighter.h
 	<SFML/Graphics.hpp>
 	"FlyingObject.h"
 	"CTexture.h"
@@ -420,15 +420,15 @@
 	"FlyingObject.h"
 	"CTexture.h"
 
-1433818627 source:d:\programsoftd\c cpp hmwk\fighters\src\ctexture.cpp
+1434092126 source:d:\programsoftd\c cpp hmwk\fighters\src\ctexture.cpp
 	"CTexture.h"
 	<SFML/Graphics.hpp>
 
-1433813262 d:\programsoftd\c cpp hmwk\fighters\include\ctexture.h
+1434092126 d:\programsoftd\c cpp hmwk\fighters\include\ctexture.h
 	<SFML/Graphics.hpp>
 	"FlyingObject.h"
 
-1433819032 source:d:\programsoftd\c cpp hmwk\fighters\src\game.cpp
+1434095643 source:d:\programsoftd\c cpp hmwk\fighters\src\game.cpp
 	"Game.h"
 	"CRand.h"
 	"CTexture.h"
@@ -439,13 +439,14 @@
 	<iostream>
 	<string>
 
-1433810733 d:\programsoftd\c cpp hmwk\fighters\include\game.h
+1434095977 d:\programsoftd\c cpp hmwk\fighters\include\game.h
 	<SFML/Graphics.hpp>
 	"FlyingObject.h"
 	"CTexture.h"
 	"Enemy.h"
 	"Fighter.h"
 	"Bullet.h"
+	"Stuff.h"
 
 1432546584 d:\programsoftd\c cpp hmwk\fighters\include\tdextern.h
 	<time.h>
@@ -460,7 +461,7 @@
 1433813460 source:d:\programsoftd\c cpp hmwk\fighters\src\stuff.cpp
 	"Stuff.h"
 
-1433488225 d:\programsoftd\c cpp hmwk\fighters\include\stuff.h
+1434095856 d:\programsoftd\c cpp hmwk\fighters\include\stuff.h
 	"FlyingObject.h"
 	"CTexture.h"
 	"Fighter.h"

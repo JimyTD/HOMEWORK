@@ -30,6 +30,8 @@ sf::Texture CTexture::pBomb;
 sf::Texture CTexture::pOver;
 sf::Texture CTexture::pBigBomb;
 sf::Texture CTexture::pNewGame;
+sf::Texture CTexture::pShield;
+
 CTexture::CTexture()
 {
     //ctor
@@ -51,6 +53,7 @@ void CTexture::load()
     this->pOver.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\gg.png");
     this->pBigBomb.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\BigBomb.png");
     this->pNewGame.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\NEWGAME.png");
+    this->pShield.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\fighter1_shield.png");
 
 }
 

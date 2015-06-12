@@ -12,6 +12,7 @@ class Fighter:public FlyingObject
         virtual ~Fighter();
         void draw();
         void explode();
+       // void
         int life;
         int type;
         //   int addSpeed;

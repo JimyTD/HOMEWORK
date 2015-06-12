@@ -6,10 +6,12 @@
 #include"Enemy.h"
 #include"Fighter.h"
 #include"Bullet.h"
+#include"Stuff.h"
 #define MAX_BULLET 100
 #define MAX_ENEMY 120
+#define MAX_STUFF 10
 #define MD_NORMAL 555
-#define MD_DEATH 666
+#define MD_SHIELD 666
 #define MD_OVER 777
 #define MD_STAGEON 856
 #define MD_NEWGAME 773
@@ -22,6 +24,7 @@
 #define TP_ENEMYBULLET 826
 /*GAME类总控整个进程。注意根据计时器循环处理敌人生成、敌人移动、碰撞处理。*/
 class CTexture;
+class Stuff;
 class Game
 {
     public:
@@ -73,6 +76,7 @@ class Game
 	        bomb++;
 	    }
 	    void rectExplosion(int heartx,int hearty,int width,int height);
+	    void Shield();
 
 
     protected:
@@ -81,6 +85,7 @@ class Game
         Fighter *pFighter;
         Bullet *pBullet[MAX_BULLET];
         Enemy *pEnemy[MAX_ENEMY];
+        Stuff *pStuff[MAX_STUFF];
         int EnemyUsage;
         int BulletUsage;
         CTexture *picture;
@@ -98,6 +103,7 @@ class Game
         int prCount;
         int shield;
         int bomb;
+        int maxSCD;
 
 
 };

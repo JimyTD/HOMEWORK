@@ -18,6 +18,7 @@ class CTexture
         static sf::Texture pOver;
         static sf::Texture pBigBomb;
         static sf::Texture pNewGame;
+        static sf::Texture pShield;
         void load();
         int MagicPlay(FlyingObject *object);
 
