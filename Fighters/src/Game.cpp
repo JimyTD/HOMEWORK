@@ -101,6 +101,7 @@ void Game::Entrance()
         {
             Shoot(TP_NORMAL);
         }
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
         {
             if(bomb>0)
@@ -148,6 +149,16 @@ void Game::Entrance()
                     }
                     break;
                 }
+                if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::S))
+                {
+                    if(shield>0)
+                    {
+                        Shield();
+                        shield--;
+                    }
+                    break;
+                }
+
 
             }
                 ////////////////////////////key answering///////////////////////
