@@ -9,7 +9,7 @@
 #include"Stuff.h"
 #define MAX_BULLET 100
 #define MAX_ENEMY 120
-#define MAX_STUFF 10
+#define MAX_STUFF 100
 #define MD_NORMAL 555
 #define MD_SHIELD 666
 #define MD_OVER 777
@@ -42,6 +42,12 @@ class Game
             delete(pBullet[i]);
             pBullet[i]=NULL;
             BulletUsage--;
+        }
+        void deleteStuff(int i)
+        {
+            delete(pStuff[i]);
+            pStuff[i]=NULL;
+            StuffUsage--;
         }
         void Move();
         void collison();
@@ -77,6 +83,8 @@ class Game
 	    }
 	    void rectExplosion(int heartx,int hearty,int width,int height);
 	    void Shield();
+	    void DropStuff(int heartx,int hearty);
+	    int maxSCD;
 
 
     protected:
@@ -88,6 +96,7 @@ class Game
         Stuff *pStuff[MAX_STUFF];
         int EnemyUsage;
         int BulletUsage;
+        int StuffUsage;
         CTexture *picture;
         sf::Sprite Background;
         sf::Sprite Lose;
@@ -103,7 +112,7 @@ class Game
         int prCount;
         int shield;
         int bomb;
-        int maxSCD;
+
 
 
 };

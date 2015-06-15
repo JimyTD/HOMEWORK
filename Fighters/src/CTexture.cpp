@@ -31,6 +31,12 @@ sf::Texture CTexture::pOver;
 sf::Texture CTexture::pBigBomb;
 sf::Texture CTexture::pNewGame;
 sf::Texture CTexture::pShield;
+sf::Texture CTexture::pSTShield;
+sf::Texture CTexture::pSTBomb;
+sf::Texture CTexture::pSTAtk;
+sf::Texture CTexture::pSTSpd;
+sf::Texture CTexture::pSTHeal;
+sf::Texture CTexture::pSTScore;
 
 CTexture::CTexture()
 {
@@ -54,6 +60,12 @@ void CTexture::load()
     this->pBigBomb.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\BigBomb.png");
     this->pNewGame.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\NEWGAME.png");
     this->pShield.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\fighter1_shield.png");
+    this->pSTShield.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\shield.png");
+    this->pSTBomb.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\GetBomb.png");
+    this->pSTScore.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\score.png");
+    this->pSTAtk.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\atk+.png");
+    this->pSTSpd.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\speed.png");
+    this->pSTHeal.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\heal.png");
 
 }
 

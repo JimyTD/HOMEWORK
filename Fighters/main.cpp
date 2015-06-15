@@ -1,5 +1,6 @@
 #define WIDTH 800
 #define HEIGHT 600
+
 #define TP_BULLET 20
 #define TP_ENEMY 30
 #define TP_NORMAL 44
@@ -7,13 +8,20 @@
 #define TP_BOMB 987
 #define TP_EXPLODE 785
 #define TP_ENEMYBULLET 826
+
+#define ST_SHIELD 124
+#define ST_BIGBOMB 785
+#define ST_HEALED 110
+#define ST_ATK 568
+#define ST_SPEED 741
+#define ST_SCORE 121
+
 #define MD_NORMAL 555
 #define MD_DEATH 666
 #define MD_OVER 777
 #define MD_STAGEON 856
 #define MD_NEWGAME 773
-#define WIDTH 800
-#define HEIGHT 600
+
 #include<windows.h>
 #include <SFML/Graphics.hpp>
 #include"Enemy.h"

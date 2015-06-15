@@ -7,9 +7,12 @@
 #include<windows.h>
 #include<iostream>
 #include<string>
+
 using namespace std;
+
 #define MAGIC_WIDTH 960
 #define MAGIC_HEIGHT 768
+
 #define TP_BULLET 20
 #define TP_ENEMY 30
 #define TP_NORMAL 44
@@ -18,15 +21,26 @@ using namespace std;
 #define TP_EXPLODE 785
 #define TP_ENEMYBULLET 826
 #define TP_MAGIC 741
+
 #define MD_NORMAL 555
 #define MD_SHIELD 666
 #define MD_OVER 777
 #define MD_STAGEON 856
 #define MD_NEWGAME 773
+
 #define OPEN 852
 #define CLOSED 741
+
 #define WIDTH 800
 #define HEIGHT 600
+
+#define ST_SHIELD 124
+#define ST_BIGBOMB 785
+#define ST_HEALED 110
+#define ST_ATK 568
+#define ST_SPEED 741
+#define ST_SCORE 121
+
 
 
 
@@ -41,6 +55,7 @@ Game::Game(sf::RenderWindow *window,CTexture *picture,int nMode)
     memset(pStuff,NULL,MAX_STUFF*sizeof(Stuff*));
     EnemyUsage=0;
     BulletUsage=0;
+    StuffUsage=0;
     Background.setTexture(picture->pBackground);
     Lose.setTexture(picture->pOver);
     New.setTexture(picture->pNewGame);
@@ -102,15 +117,7 @@ void Game::Entrance()
             Shoot(TP_NORMAL);
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-        {
-            if(bomb>0)
-            {
-                Shoot(TP_MAGIC);
-                bomb--;
-            }
 
-        }
 
         while (pWindow->pollEvent(event))
             {
@@ -212,44 +219,36 @@ void Game::Entrance()
                     }
                 }
 //////////////////////////////////////////fighter draw///////////////////////////////////////////////////////
-                for(int i=0;i<MAX_ENEMY;i++)
+                for(int i=0;i<MAX_BULLET;i++)
                 {
-
-
                     if(pBullet[i]!=NULL)
                     {
                         pBullet[i]->setPosition(pBullet[i]->left,pBullet[i]->top);
                         pWindow->draw(*(pBullet[i]));
 
                     }
-
-
                 }
 ////////////////////////////////////////bullet draw///////////////////////////////////////////////////////////
-                for(int i=0;i<MAX_BULLET;i++)
+                for(int i=0;i<MAX_ENEMY;i++)
                 {
                     if(pEnemy[i]!=NULL)
                     {
-                        switch(pEnemy[i]->type)
-                        {
-                        case TP_NORMAL:
-                            pEnemy[i]->setPosition(pEnemy[i]->left,pEnemy[i]->top);
-                            pWindow->draw(*(pEnemy[i]));
-                            break;
-                        case TP_EXPLODE:
-                            pEnemy[i]->setPosition(pEnemy[i]->left,pEnemy[i]->top);
-                            pWindow->draw(*(pEnemy[i]));
-                            break;
-                        case TP_ENEMYBULLET:
-                            pEnemy[i]->setPosition(pEnemy[i]->left,pEnemy[i]->top);
-                            pWindow->draw(*(pEnemy[i]));
-                            break;
 
-                        }
-
+                            pEnemy[i]->setPosition(pEnemy[i]->left,pEnemy[i]->top);
+                            pWindow->draw(*(pEnemy[i]));
                     }
                 }
 ///////////////////////////////////enemy draw//////////////////////////////////////////////
+                for(int i=0;i<MAX_STUFF;i++)
+                {
+                    if(pStuff[i]!=NULL)
+                    {
+                            pStuff[i]->setPosition(pStuff[i]->left,pStuff[i]->top);
+                            pWindow->draw(*(pStuff[i]));
+                    }
+                }
+
+///////////////////////////////STUFF DRAW////////////////////////////
                 if(mode!=MD_NEWGAME)
                 {
                     pWindow->draw(ScoreText);
@@ -273,7 +272,7 @@ void Game::Entrance()
                 ScoreText.setPosition(0,0);
             }
 
-
+            /////////////////////////////////THINGS draw//////////////////////////
 
 
 
@@ -443,6 +442,33 @@ void Game::Move()
            }
 
        }
+    for(int k=0;k<MAX_STUFF;k++)
+       {
+           if(pStuff[k]!=NULL)
+           {
+               pStuff[k]->top+=pStuff[k]->speed;//Bullet heads front.
+
+               if((pStuff[k]->left)<(-pStuff[k]->width))
+               {
+                   deleteStuff(k);
+                   continue;
+               }
+
+              if((pStuff[k]->left)>WIDTH)
+               {
+                   deleteStuff(k);
+                   continue;
+
+               }
+               if((pStuff[k]->top)>HEIGHT)
+               {
+                   deleteStuff(k);
+                   continue;
+               }
+           }
+
+       }
+
 
 }
 
@@ -456,6 +482,7 @@ void Game::collison()
 {
 
     int collisons=0;
+    ////////fighter vs enemy
     for(int i=0;i<MAX_ENEMY;i++)
        {
 
@@ -477,6 +504,7 @@ void Game::collison()
                else
                {
                    addScore(pEnemy[i]->score);
+                   DropStuff(pEnemy[i]->left+(pEnemy[i]->width)/2,pEnemy[i]->top+(pEnemy[i]->height)/2);
                    pEnemy[i]->explode();
                }
                if(mode!=MD_SHIELD&&Cheat!=OPEN)
@@ -486,6 +514,24 @@ void Game::collison()
                     if(IsLose==-1)mode=MD_OVER;
                 }
             }
+            /////////fighter vs stuff
+    for(int i=0;i<MAX_STUFF;i++)
+       {
+
+           if(pStuff[i]==NULL)continue;
+           int Dx=0,Dy=0,fighterCL=0;
+           Dx=abs((pFighter->left+pFighter->width/2)-(pStuff[i]->left+pStuff[i]->width/2));
+           if(Dx<(pFighter->width/2+pStuff[i]->width/2))
+              fighterCL++;
+           Dy=abs((pFighter->top+pFighter->height/2)-(pStuff[i]->top+pStuff[i]->height/2));
+           if(Dy<(pFighter->height/2+pStuff[i]->height/2))
+              fighterCL++;
+            if(fighterCL>=2)///////////get
+            {
+                   pStuff[i]->affect();
+                   deleteStuff(i);
+            }
+       }
 
 
            ////////enemy and our bullet
@@ -507,6 +553,7 @@ void Game::collison()
                     if(collisons>=2)
                     {
                         addScore(pEnemy[i]->score);
+                        DropStuff(pEnemy[i]->left+(pEnemy[i]->width)/2,pEnemy[i]->top+(pEnemy[i]->height)/2);
                         pEnemy[i]->explode();
                         deleteBullet(j);
                     }
@@ -556,7 +603,7 @@ void Game::rectExplosion(int heartx,int hearty,int width,int height)
                         collisons++;
                     if(collisons>=2)
                     {
-                        std::cout<<collisons;
+                        DropStuff(pEnemy[i]->left+(pEnemy[i]->width)/2,pEnemy[i]->top+(pEnemy[i]->height)/2);
                         addScore(pEnemy[i]->score);
                         pEnemy[i]->explode();
                     }
@@ -572,3 +619,21 @@ void Game::Shield()
     mode=MD_SHIELD;
     pFighter->nCount=120;
 }
+
+void Game::DropStuff(int heartx,int hearty)
+{
+    if(StuffUsage>MAX_STUFF-1)return ;
+    int rand=CRand::GetRandomNumber3()%6;
+    for(int i=0;i<=MAX_STUFF;i++)
+       {
+           if(pStuff[i]==NULL)
+           {
+               pStuff[i]=new Stuff(heartx-12,hearty-12,24,24,1,picture,rand,pFighter,this);
+               StuffUsage++;
+               break;
+           }
+       }
+
+}
+
+
