@@ -25,6 +25,7 @@ class CTexture
         static sf::Texture pSTSpd;
         static sf::Texture pSTHeal;
         static sf::Texture pSTScore;
+        static sf::Texture pBoss;
         void load();
         int MagicPlay(FlyingObject *object);
 

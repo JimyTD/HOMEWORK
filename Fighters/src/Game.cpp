@@ -169,17 +169,22 @@ void Game::Entrance()
 
             }
                 ////////////////////////////key answering///////////////////////
+
                 /////////////change stuffs//////////////////////
             if(mode!=MD_OVER&&mode!=MD_STAGEON)
             {
                 if(stage==1)
-                    if(score>=200)promotion();
+                    if(score>=2000)promotion();
                 if(stage==2)
-                    if(score>=500)promotion();
-                int nRand=CRand::GetRandomNumber()%30;////new enemy
-                if(nRand==1)
+                    if(score>=5000)promotion();
+                int nRand=CRand::GetRandomNumber()%700;////new enemy
+                if(nRand>=1&&nRand<=30)
                 {
                     developEnemy(TP_NORMAL);
+                }
+                if(nRand==100)
+                {
+                    developEnemy(TP_BOSS);
                 }
                 if(shootCD>0)shootCD--;
                 Move();
@@ -342,7 +347,7 @@ void Game::developEnemy(int type,int m)
        {
            if(pEnemy[i]==NULL)
            {
-               pEnemy[i]=new Enemy(left,0,62,60,speed,picture,TP_NORMAL,speed-stage+1);
+               pEnemy[i]=new Enemy(left,0,62,60,speed,picture,TP_NORMAL,speed-stage+1,stage);
                EnemyUsage++;
                break;
            }
@@ -360,9 +365,18 @@ void Game::developEnemy(int type,int m)
                        break;
                    }
                }
-
-
-
+        }
+    if(type==TP_BOSS)
+        {
+            for(int i=0;i<=MAX_ENEMY;i++)
+               {
+                   if(pEnemy[i]==NULL)
+                   {
+                       pEnemy[i]=new Enemy(250,-100,300,210,2,picture,TP_BOSS,100,20*stage*stage);
+                       EnemyUsage++;
+                       break;
+                   }
+               }
         }
 
 
@@ -399,20 +413,33 @@ void Game::Move()
                            deleteEnemy(i);
                            continue;
                        }
-                }
-                   if(pEnemy[i]->type==TP_EXPLODE)
+               }
+               if(pEnemy[i]->type==TP_EXPLODE)
+                {
+                    pEnemy[i]->nCount--;
+                    if(pEnemy[i]->nCount<0)
                     {
-                        pEnemy[i]->nCount--;
-                        if(pEnemy[i]->nCount<0)
-                        {
-                            deleteEnemy(i);
-                            mciSendString("seek explode to 0", NULL, 0, NULL);
-                            mciSendString("play explode", NULL, 0, NULL);
-                            continue;
-                        }
+                        deleteEnemy(i);
+                        mciSendString("seek explode to 0", NULL, 0, NULL);
+                        mciSendString("play explode", NULL, 0, NULL);
+                        continue;
                     }
+                }
+                if(pEnemy[i]->type==TP_BOSS)
+                {
+                    if(pEnemy[i]->top<0)pEnemy[i]->top+=pEnemy[i]->speed;
+                    else
+                    {
+                        pEnemy[i]->left+=pEnemy[i]->speed;
+                        if(pEnemy[i]->left+pEnemy[i]->width>=850)
+                            pEnemy[i]->speed=-pEnemy[i]->speed;
+                        if(pEnemy[i]->left<=-100)
+                            pEnemy[i]->speed=-pEnemy[i]->speed;
+                    }
+                }
 
            }
+
 
        }
     for(int j=0;j<MAX_BULLET;j++)
@@ -505,7 +532,12 @@ void Game::collison()
                {
                    addScore(pEnemy[i]->score);
                    DropStuff(pEnemy[i]->left+(pEnemy[i]->width)/2,pEnemy[i]->top+(pEnemy[i]->height)/2);
-                   pEnemy[i]->explode();
+                   pEnemy[i]->life--;
+                   if(pEnemy[i]->life<=0)
+                        {
+                            DropStuff(pEnemy[i]->left+(pEnemy[i]->width)/2,pEnemy[i]->top+(pEnemy[i]->height)/2);
+                            pEnemy[i]->explode();
+                        }
                }
                if(mode!=MD_SHIELD&&Cheat!=OPEN)
                 {
@@ -552,10 +584,17 @@ void Game::collison()
                         collisons++;
                     if(collisons>=2)
                     {
-                        addScore(pEnemy[i]->score);
-                        DropStuff(pEnemy[i]->left+(pEnemy[i]->width)/2,pEnemy[i]->top+(pEnemy[i]->height)/2);
-                        pEnemy[i]->explode();
+
                         deleteBullet(j);
+                        pEnemy[i]->life--;
+                        if(pEnemy[i]->life<=0)
+                        {
+                            addScore(pEnemy[i]->score);
+                            DropStuff(pEnemy[i]->left+(pEnemy[i]->width)/2,pEnemy[i]->top+(pEnemy[i]->height)/2);
+                            pEnemy[i]->explode();
+
+                        }
+
                     }
                     collisons=0;
                 }
@@ -581,6 +620,10 @@ void Game::clearAll()
             delete(pBullet[i]);
     memset(pEnemy,NULL,MAX_ENEMY*sizeof(Enemy*));
     memset(pBullet,NULL,MAX_BULLET*sizeof(Bullet*));
+    memset(pStuff,NULL,MAX_STUFF*sizeof(Stuff*));
+    BulletUsage=0;
+    EnemyUsage=0;
+    StuffUsage=0;
 
 }
 
@@ -602,6 +645,8 @@ void Game::rectExplosion(int heartx,int hearty,int width,int height)
                     if(dy<height/2+(pEnemy[i]->height/2))
                         collisons++;
                     if(collisons>=2)
+                        pEnemy[i]->life--;
+                    if(pEnemy[i]->life<=0)
                     {
                         DropStuff(pEnemy[i]->left+(pEnemy[i]->width)/2,pEnemy[i]->top+(pEnemy[i]->height)/2);
                         addScore(pEnemy[i]->score);
@@ -623,6 +668,8 @@ void Game::Shield()
 void Game::DropStuff(int heartx,int hearty)
 {
     if(StuffUsage>MAX_STUFF-1)return ;
+    int IsDrop=CRand::GetRandomNumber()%60;
+    if(Cheat==CLOSED)if(IsDrop!=31)return;
     int rand=CRand::GetRandomNumber3()%6;
     for(int i=0;i<=MAX_STUFF;i++)
        {

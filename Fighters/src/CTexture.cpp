@@ -37,6 +37,7 @@ sf::Texture CTexture::pSTAtk;
 sf::Texture CTexture::pSTSpd;
 sf::Texture CTexture::pSTHeal;
 sf::Texture CTexture::pSTScore;
+sf::Texture CTexture::pBoss;
 
 CTexture::CTexture()
 {
@@ -66,6 +67,7 @@ void CTexture::load()
     this->pSTAtk.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\atk+.png");
     this->pSTSpd.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\speed.png");
     this->pSTHeal.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\heal.png");
+    this->pBoss.loadFromFile("D:\\ProgramsOfTD\\C CPP HMWK\\Fighters\\Pictures\\boss.png");
 
 }
 

@@ -77,10 +77,10 @@ void Stuff::affect()
         break;
     case ST_ATK:
 
-        pGame->maxSCD-=2;
+        if(pGame->maxSCD>2)pGame->maxSCD-=2;
         break;
     case ST_SPEED:
-        pFighter->speed+=2;
+        if(pFighter->speed<=20)pFighter->speed+=2;
         break;
     }
 }

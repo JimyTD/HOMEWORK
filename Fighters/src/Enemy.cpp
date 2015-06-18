@@ -12,8 +12,18 @@
 Enemy::Enemy(int nLeft,int nTop,int nWidth,int nHeight,int nSpeed,CTexture *ct,int nType,int nScore,int life):FlyingObject(nLeft,nTop,nWidth,nHeight,nSpeed,ct,0)
 {
     type=nType;
-    if(nType==TP_NORMAL)setTexture(ct->pEnemy1,true);
+    this->life=life;
+    if(nType==TP_NORMAL)
+       {
+           setTexture(ct->pEnemy1,true);
+
+       }
     if(nType==TP_ENEMYBULLET)setTexture(ct->pEBullet);
+    if(nType==TP_BOSS)
+    {
+        setTexture(ct->pBoss,true);
+
+    }
     setPosition(nLeft,nTop);
     score=nScore;
 
